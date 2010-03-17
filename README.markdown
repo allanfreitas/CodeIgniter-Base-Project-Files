@@ -1,8 +1,6 @@
-CodeIgniter Base Project Files
----
+#CodeIgniter Base Project Files
 
-Features
-===
+##Features
 
 
 * Doctrine 1.2 ORM
