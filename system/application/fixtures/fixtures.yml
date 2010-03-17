@@ -1,0 +1,35 @@
+Address:
+    chris:
+        name: 'Chris McLeod'
+        business: 'Pixel Meadow'
+        address_1: '69 Donbank Terrace'
+        town: 'Aberdeen'
+        postcode: 'AB24 2SD'
+        phone: '01224 481876'
+User:
+    chris:
+        email: 'chris@pixelmeadow.com'
+        password: 'tgb76!UHB'
+        registered: '2010-01-30 00:00:00'
+        is_valid: true
+        is_deleted: false
+        address_id: 1
+Category:
+    ambassador:
+        name: 'Ambassador of the Year'
+        slug: 'ambassador-of-the-year'
+    visitorexp:
+        name: 'Best Visitor Experience'
+        slug: 'best-visitor-experience'
+    initiative:
+        name: 'Community Tourism Initiative'
+        slug: 'community-tourism-initiative'
+    custcare:
+        name: 'Customer Care'
+        slug: 'customer-care'
+    diningout:
+        name: 'Dining out Experience'
+        slug: 'dining-out-experience'
+    green:
+        name: 'The Green Award'
+        slug: 'the-green-award'

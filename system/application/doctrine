@@ -1,0 +1,58 @@
+<?php
+
+define('BASEPATH','.'); // mockup that this app was executed from ci ;)
+chdir(dirname(__FILE__));
+require_once('config/database.php');
+// Require Doctrine.php
+require_once(realpath(dirname(__FILE__) . '/..') . DIRECTORY_SEPARATOR . 'plugins/doctrine/lib/Doctrine.php');
+
+// Set the autoloader
+spl_autoload_register(array('Doctrine', 'autoload'));
+spl_autoload_register(array('Doctrine', 'modelsAutoload'));
+
+// Create dsn from the info above
+foreach ($db as $connection_name => $db_values) {
+
+	// first we must convert to dsn format
+	$dsn = $db[$connection_name]['dbdriver'] .
+		'://' . $db[$connection_name]['username'] .
+		':' . $db[$connection_name]['password'].
+		'@' . $db[$connection_name]['hostname'] .
+		'/' . $db[$connection_name]['database'];
+    if($connection_name == $active_group){
+    	Doctrine_Manager::connection($dsn,$connection_name);
+    }
+}
+
+// Load the Doctrine connection
+//Doctrine_Manager::connection($db['default']['dsn'], $db['default']['database']);
+
+// Set the model loading to conservative/lazy loading
+Doctrine_Manager::getInstance()->setAttribute(
+	Doctrine::ATTR_AUTO_ACCESSOR_OVERRIDE, true);
+
+// this sets all table columns to notnull and unsigned (for ints) by default
+Doctrine_Manager::getInstance()->setAttribute(
+	Doctrine::ATTR_DEFAULT_COLUMN_OPTIONS,
+	array('notnull' => true, 'unsigned' => true));
+
+// set the default primary key to be named 'id', integer, 4 bytes
+Doctrine_Manager::getInstance()->setAttribute(
+	Doctrine::ATTR_DEFAULT_IDENTIFIER_OPTIONS,
+	array('name' => 'id', 'type' => 'integer', 'length' => 4));
+
+Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_MODEL_LOADING, Doctrine::MODEL_LOADING_CONSERVATIVE);
+
+// Load the models for the autoloader
+//Doctrine::loadModels(realpath(dirname(__FILE__) . '/..') . DIRECTORY_SEPARATOR . 'models');
+
+// Configure Doctrine Cli
+// Normally these are arguments to the cli tasks but if they are set here the arguments will be auto-filled
+$config = array('data_fixtures_path'  =>  dirname(__FILE__) . DIRECTORY_SEPARATOR . '/fixtures',
+                'models_path'         =>  dirname(__FILE__) . DIRECTORY_SEPARATOR . '/models',
+                'migrations_path'     =>  dirname(__FILE__) . DIRECTORY_SEPARATOR . '/migrations',
+                'sql_path'            =>  dirname(__FILE__) . DIRECTORY_SEPARATOR . '/sql',
+                'yaml_schema_path'    =>  dirname(__FILE__) . DIRECTORY_SEPARATOR . '/schema');
+
+$cli = new Doctrine_Cli($config);
+$cli->run($_SERVER['argv']);

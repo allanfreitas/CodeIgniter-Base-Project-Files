@@ -1,0 +1,53 @@
+<h1>A Markdown Page</h1>
+
+<p>This page (and most of the other pages you've been reading) have been created by using the <b>render_page()</b> function in Ocular. 
+This function allows you to use <a href="http://michelf.com/projects/php-markdown/extra/">Markdown Extra</a> syntax to create your html content,
+which is then cached for optimal display times.</p>
+
+<p>To see how this page looks in the editor,
+open the following page and have fun:</p>
+
+<p><code>
+    /system/application/views/welcome/page_test.md
+</code></p>
+
+<p><caption>Table Test</caption>
+<table>
+<thead>
+<tr>
+  <th>Column 1</th>
+  <th>Column 2</th>
+  <th>Column 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Content</td>
+  <td>Content</td>
+  <td>Content</td>
+</tr>
+</tbody>
+</table></p>
+
+<h2>Usage</h2>
+
+<p>To use pages in Ocular, simply create a new file using the <a href="http://michelf.com/projects/php-markdown/extra/">Markdown Extra syntax</a> with a file extension of '.md'. Place the file where you would any normal view file. (i.e. /application/views/)</p>
+
+<p>Then, in your controller, call the <b>render_page()</b> function prior to calling the Ocular render() function. One thing to watch out for is that you must provide the full directory path, relative to the views directory. For example, this page is located at <em>application/views/welcome/page_test.md</em>. To render this page, the function looks like this:</p>
+
+<pre>
+<code>
+function page()
+{
+    $this->ocular->set('page_title', 'Render Page Test');
+    $this->ocular->render_page('welcome/page_test');
+    $this->ocular->render();
+}
+</code>
+</pre>
+
+<p>This file can be viewed at:</p>
+
+<p><code>
+/application/controllers/welcome.php
+</code></p>

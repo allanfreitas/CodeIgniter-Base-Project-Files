@@ -1,0 +1,85 @@
+<h1>Overview</h1>
+
+<p>This page is going to go over a few of the basic concepts and features that Ocular provides.</p>
+
+<h2>Automatic View Selection</h2>
+
+<p>Ocular determines the name of the view to show at any given time by using the controller and view names to represent the folder hierarchy within the application/views directory (or whatever directory you have specified in the ocular config file).</p>
+
+<p>For example, the first page that appears on a stock CodeIgniter installation using Ocular is the <strong>welcome/index</strong> function. In Ocular, this file can be found at:</p>
+
+<pre><code>application/views/welcome/index.php
+</code></pre>
+
+<p>Notice how the controller name is the same as the first directory under the views directory. The file is named the same as the function being called (<em>index</em>).</p>
+
+<p>While Ocular defaults to these locations, it is possible to specify which view will be displayed.</p>
+
+<pre><code>$this-&gt;ocular-&gt;view_name = 'view_name';
+</code></pre>
+
+<p>It is also possible to nest directories for even more fine-grained control of your url when you need it. <a href="/honkey/tonk/woman">Here's an example.</a> Currently, only one level of nesting is supported.</p>
+
+<h2>Site Templates</h2>
+
+<p>A Template takes care of what the page looks like without any content. It is the shell of the page. Templates are stored in:</p>
+
+<pre><code>/application/views/templates/
+</code></pre>
+
+<p>When you call the <strong>render()</strong> function, Ocular looks in the config file for the name of the site's default template (which, as shipped with Ocular is <strong>application</strong>) and renders that out.</p>
+
+<p>In many projects you may have several templates (one for the home page, another for the rest of the site, etc.). To use these in Ocular, you simply insert the name of the template view file as a parameter to the <strong>render()</strong> function:</p>
+
+<pre><code>$this-&gt;ocular-&gt;render('second_template');
+</code></pre>
+
+<h2>Making Data Available In Your Views</h2>
+
+<p>In order to make data available to your views, you must use the <em>set</em> function:</p>
+
+<pre><code>$this-&gt;ocular-&gt;set('name', 'value');
+</code></pre>
+
+<p>This data would then be available to use within your views, just like within CodeIgniter's <strong>load->view</strong> function.</p>
+
+<h2>Page Titles</h2>
+
+<p>Page titles are generated automatically, though they will often not be what you want. By default, the page title is generated using the following pattern:</p>
+
+<pre><code>Controller_name Function_name | Site_name
+</code></pre>
+
+<p>You can set your own name by setting a variable in the data that will be passed to the view, by using the <strong>set()</strong> function. It uses a reserved variable name of <strong>page_title</strong>, one of a small handful of reserved variable names. The rest will be described below.</p>
+
+<pre><code>$this-&gt;ocular-&gt;set('page_title', 'Overview');
+</code></pre>
+
+<p>would generate a page_title that looks like:</p>
+
+<pre><code>Overview | Site_name
+</code></pre>
+
+<p>You can tell Ocular to use or not use the controller and function names with the following calls:</p>
+
+<pre><code>$this-&gt;ocular-&gt;show_controller = TRUE;
+$this-&gt;ocular-&gt;show_function = TRUE;
+</code></pre>
+
+<p>You can also tell Ocular how to deal with the site name--whether it's appended or prepended to the page title--and what to use as a divider. These settings can be found in the ocular config file.</p>
+
+<h2>Reserved Variable Names</h2>
+
+<p>Along with <strong>page_title</strong>, the following names are used within Ocular and cannot be used for something other than their described purpose:</p>
+
+<ul>
+<li><strong>body_class</strong> - used during the render() function to generate the class="name" for the body. It is available within the views as <em>$body_class</em>. Default value = blank.</li>
+<li><strong>body_id</strong> - used during the render() function to generate the id="name" for the body. It is available within the views as <em>$body_id</em>. Default value = current controller name.</li>
+</ul>
+
+<p>An example of using this in your view is:</p>
+
+<pre><code>&lt;body &lt;?= $body_id ?&gt; &lt;?= $body_class ?&gt;&gt;
+</code></pre>
+
+<p>Next: <a href="/welcome/partials">Partial Views</a></p>
