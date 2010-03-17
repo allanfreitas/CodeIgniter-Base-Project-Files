@@ -1,8 +1,8 @@
 CodeIgniter Base Project Files
-------------------------------
+---
 
 Features
-========
+===
 
 
 * Doctrine 1.2 ORM
